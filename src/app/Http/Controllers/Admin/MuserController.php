@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class MuserController extends Controller
 {
@@ -38,28 +38,28 @@ class MuserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
         $rules = [
             'userid' => 'required',
             'username' => 'required',
-            'email' => 'required',
-            'password' => 'required|min:6|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
-            'confirmpassword' => 'required|min:6|same:password',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required_with:confirmpassword|same:confirmpassword|min:6',
             'status' => 'required',
+            'level' => 'required',
+            'confirmpassword' => 'min:6',
         ];
 
         $messages = [
             'userid.required' => 'ID must be filled!',
             'username.required' => 'Username must be filled!',
             'email.required' => 'E-mail must be filled!',
+            'email.unique' => 'E-mail has been register!',
             'password.required' => 'Password must be filled!',
-            'password.confirmed' => 'Password must be the same!',
+            'password.same' => 'Password must be the same!',
             'password.min' => 'Password to shoort!',
             'email.required' => 'E-mail must be filled!',
-            'confirmpassword.required' => 'Confirm Password must be filled!',
-            'confirmpassword.min' => 'Password to shoort!',
-            'confirmpassword.same' => 'Password must be same!',
             'status.required' => 'Status must be filled!',
+            'level.required' => 'Role must be filled!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -68,14 +68,13 @@ class MuserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput($request->all);
         }
 
-
         $musers = new User();
         $musers->userid = $request->userid;
         $musers->username = $request->username;
         $musers->email = $request->email;
-        $musers->email_verified_at = $request->email;
-        $musers->password = $request->password;
-        $musers->status = $request->password;
+        $musers->password = bcrypt($request->password, ['rounds' => 10]);
+        $musers->status = $request->status;
+        $musers->level = $request->level;
         $musers->updateby = 'Admin';
         $insertdata = $musers->save();
 
@@ -86,6 +85,7 @@ class MuserController extends Controller
             Session::flash('errors', ['' => 'User Failed to created!']);
             return redirect()->route('admin.user.create');
         }
+
     }
 
     /**
@@ -130,6 +130,7 @@ class MuserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::where('id', $id)->delete();
+        return back()->with('success', 'User has been deleted');
     }
 }

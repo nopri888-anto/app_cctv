@@ -17,7 +17,7 @@
                 </ul>
             </div>
             @endif
-            <div class="card card-light">
+            <div class="card card-outline card-primary">
                 <div class="card-header">
                     <h3 class="card-title">{{__('Add Branch Data')}}</h3>
                 </div>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Textarea</label>
+                            <label class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" rows="3" name="branchaddress"></textarea>
                             </div>

@@ -14,7 +14,7 @@ class CreateMscoresTable extends Migration
     public function up()
     {
         Schema::create('mscores', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->integer('bottomscore');
             $table->integer('topscore');
             $table->string('yudisium', 40);

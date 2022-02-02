@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mcam;
 use Illuminate\Http\Request;
 
 class LiveController extends Controller
@@ -14,7 +15,8 @@ class LiveController extends Controller
     public function index()
     {
         //
-        return view('monitoring.live.index');
+        $mcam = Mcam::with('outlet')->get();
+        return view('user.live.index', compact('mcam'));
     }
 
     /**

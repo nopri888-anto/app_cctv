@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -21,8 +22,6 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $username;
-
     /**
      * Where to redirect users after login.
      *
@@ -38,49 +37,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->username = $this->findUsername();
     }
 
-    public function findUsername()
+    public function showLoginForm()
     {
-        $login = request()->input('login');
+        return view('pages.auth.login');
+    }
 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        request()->merge([$fieldType => $login]);
-
-        return $fieldType;
+    protected function sendFailedLoginResponse()
+    {
+        throw ValidationException::withMessages([
+            'username' => [trans('auth.failed')],
+        ]);
     }
 
     public function username()
     {
-        return $this->username;
+        $login = request()->input('username');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$field => $login]);
+        return $field;
+        // return 'username';
     }
-
-    public function login(Request $request)
-    {
-        $this->validate($request, [
-            'login' => 'required',
-            'password' => 'required',
-        ]);
-
-        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL)
-        ? 'email'
-        : 'username';
-
-        $request->merge([
-            $login_type => $request->input('login'),
-        ]);
-
-        if (Auth::attempt($request->only($login_type, 'password'))) {
-            return redirect()->intended($this->redirectPath());
-        }
-
-        return redirect()->back()
-            ->withInput()
-            ->withErrors([
-                'login' => 'These credentials do not match our records.',
-            ]);
-    }
-
 }

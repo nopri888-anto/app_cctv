@@ -14,12 +14,13 @@ class CreateMscorecardsTable extends Migration
     public function up()
     {
         Schema::create('mscorecards', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('scorecarname', 40)->default();
             $table->string('status', 2)->default();
             $table->string('description', 200)->default();
             $table->string('updatedby', 15)->default();
             $table->timestamps();
+
         });
     }
 

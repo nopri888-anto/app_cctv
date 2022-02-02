@@ -14,10 +14,8 @@ class CreateMcamsTable extends Migration
     public function up()
     {
         Schema::create('mcams', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('moutletfk')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->bigIncrements('id');
+            $table->bigInteger('moutletfk')->unsigned();
             $table->string('camid', 20);
             $table->ipAddress('camip', 30);
             $table->string('camport', 4);
@@ -27,7 +25,7 @@ class CreateMcamsTable extends Migration
             $table->string('camdeviceport', 4);
             $table->timestamps();
 
-            $table->foreign('moutletfk')->references('id')->on('moutlets');
+            $table->foreign('moutletfk')->references('id')->on('moutlets')->onDelete('cascade');
         });
     }
 

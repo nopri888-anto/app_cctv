@@ -1,4 +1,4 @@
-@extends('layout.user_layout')
+@extends('layout.admin_layout')
 
 @section('content')
 <div class="row">
@@ -42,10 +42,10 @@
                     <div class="col-md-6">
                         <div class="form-group row">
                             <div class="col-md-4">
-                                <button type="button" class="btn-block btn-success btn-flat" onclick="clickLogin();">{{__('Connect CCTV')}}</button>
+                                <button type="button" title="Play" class="btn-block btn-info bg-gradient" onclick="clickLogin();"><i class="fas fa-play"></i></button>
                             </div>
                             <div class="col-md-4">
-                                <button type="button" class="btn-block btn-success btn-flat" onclick="clickLogout();">{{__('Stop Connection')}}</button>
+                                <button type="button" title="Stop" class="btn-block btn-warning bg-gradient" onclick="clickLogout();"><i class="fas fa-stop-circle"></i></button>
                             </div>
                         </div>
                     </div>
@@ -91,6 +91,7 @@
                                     <div class="col-sm">
                                         <input id="endtime" type="text" class="form-control txt" value="2013-12-11 23:59:59" />
                                     </div>
+                                    <br>
                                     <input type="button" class="btn-block btn-success btn-flat" value="Search" onclick="clickRecordSearch(0);" />
                                 </div>
                                 <!--<div class="form-group row ">
@@ -139,7 +140,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-block bg-gradient-info">Start Audit</button>
+                        <a href="{{route('audit',$cam->camip)}}" type="button" class="btn btn-block bg-gradient-success">Start Audit</a>
                     </div>
                     <div class="col-md-4">
                     </div>

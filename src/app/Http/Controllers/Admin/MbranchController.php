@@ -80,8 +80,8 @@ class MbranchController extends Controller
         $insertdata = $mbranch->save();
 
         if ($insertdata) {
-            Session::flash('success', 'Branch has been created!');
-            return redirect()->route('admin.branch');
+            // Session::flash('success', 'Branch has been created!');
+            return redirect()->route('admin.branch')->with('success', 'Branch has been created!');
         } else {
             Session::flash('errors', ['' => 'Branch Failed to created!']);
             return redirect()->route('admin.branch.create');

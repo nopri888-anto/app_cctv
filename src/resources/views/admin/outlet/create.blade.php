@@ -17,7 +17,7 @@
                 </ul>
             </div>
             @endif
-            <div class="card card-light">
+            <div class="card card-outline card-primary">
                 <div class="card-header">
                     <h3 class="card-title">{{__('Add Branch Data')}}</h3>
                 </div>

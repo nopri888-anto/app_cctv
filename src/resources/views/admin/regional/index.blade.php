@@ -1,16 +1,16 @@
 @extends('layout.admin_layout')
 
 @section('content')
-<div class="card">
+<div class="card card-outline card-primary">
     <div class="card-header">
-        @if(Session::has('success'))
+        {{-- @if(Session::has('success'))
         <div class="alert alert-default-success alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
             {{Session::get('success')}}
         </div>
-        @endif
+        @endif --}}
         <h3 class="card-title"><a href="{{route('regional.create')}}" class="btn btn-success">{{__('Add Branch')}}</a></h3>
     </div>
     <!-- /.card-header -->
@@ -31,7 +31,7 @@
                     <td>{{$mregion->regionid}}</td>
                     <td>{{$mregion->regionname}}</td>
                     <td>
-                        <a href="{{ route('regional.edit',$mregion->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{route('regional.edit',$mregion->id) }}" class="btn btn-warning">Edit</a>
                         <a href="{{route('regional.delete',$mregion->id)}}" class="btn btn-danger">Delete</a></td>
                     </td>
                 </tr>
@@ -39,4 +39,5 @@
         </table>
     </div>
     <!-- /.card-body -->
+    @include('sweetalert::alert')
     @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mcam;
+use App\Models\Mscorecard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,14 +17,7 @@ class OfflineController extends Controller
 
     public function index()
     {
-        //$mregions['data'] = Mregion::orderBy('regionname', 'DESC')
-        //    ->select('id', 'regionname')->get();
 
-        //$mcams = [
-        //    'mcam' => $this->Mcam->getDataCam(),
-        //];
-        //return view('user.offline.index')->with("mregions", $mregions);
-        //return view('user.offline.index', $mcams);
         $mcams = [
             'mcam' => $this->Mcam->getDataCam(),
         ];
@@ -49,10 +43,7 @@ class OfflineController extends Controller
 
     public function show($mcam)
     {
-        /// dengan menggunakan resource, kita bisa memanfaatkan model sebagai parameter
-        /// berdasarkan id yang dipilih
-        /// href="{{ route('posts.show',$post->id) }}
-        //$cam = Mcam::find($mcam);
+
         $cam = DB::table('mcams')
             ->join('moutlets', 'mcams.moutletfk', '=', 'moutlets.id')
             ->join('mbranches', 'moutlets.mbranchfk', '=', 'mbranches.id')
@@ -60,31 +51,6 @@ class OfflineController extends Controller
             ->select('mcams.*', 'moutlets.outlatename', 'mbranches.branchname', 'mregions.regionname')
             ->where('mcams.id', 'like', "%" . $mcam . "%")->first();
         return view('user.offline.detail', compact('cam'));
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 
     public function getRegion($mregionsid = 0)
@@ -128,6 +94,64 @@ class OfflineController extends Controller
             ->get();
 
         return response()->json($detail);
+    }
+
+    public function startAudit($cam)
+    {
+        $taudit = DB::table('taudityaspect')
+            ->join('maspeks', 'taudityaspect.maspectfk', '=', 'maspeks.id')
+            ->join('taudity', 'taudityaspect.taudityfk', '=', 'taudity.id')
+            ->select('taudityaspect.*', 'maspeks.*', 'taudity.*')
+            ->get();
+        $mcam = DB::table('mcams')
+            ->join('moutlets', 'mcams.moutletfk', '=', 'moutlets.id')
+            ->join('mbranches', 'moutlets.mbranchfk', '=', 'mbranches.id')
+            ->join('mregions', 'mbranches.mregionfk', '=', 'mregions.id')
+            ->select('mcams.*', 'moutlets.outlatename', 'mbranches.branchname', 'mregions.regionname')
+            ->where('mcams.camip', 'like', "%" . $cam . "%")->first();
+        return view('user.offline.scorecard', compact('mcam', 'taudit'));
+    }
+
+    public function searchAuditData(Request $request)
+    {
+        $keyword = $request->find;
+        $mcam = DB::table('taudityscore')
+            ->join('taudityaspect', 'taudityscore.taudityaspectfk', '=', 'taudityaspect.id')
+            ->join('maspeks', 'taudityaspect.maspectfk', '=', 'maspeks.id')
+            ->join('taudity', 'taudityaspect.taudityfk', '=', 'taudity.id')
+            ->select('mcams.*', 'moutlets.outlatename', 'mbranches.branchname', 'mregions.regionname')
+            ->where('regionname', 'like', "%" . $keyword . "%")
+            ->orWhere('branchname', 'like', "%" . $keyword . "%")
+            ->orWhere('outlatename', 'like', "%" . $keyword . "%")
+            ->orWhere('camid', 'like', "%" . $keyword . "%")
+            ->paginate(5);
+        return view('user.offline.index', compact('mcam'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function score($mcamid)
+    {
+
+        $mscore = Mscorecard::distinct()->get(['scorecarname']);
+
+        $cam = DB::table('mcams')
+            ->join('moutlets', 'mcams.moutletfk', '=', 'moutlets.id')
+            ->join('mbranches', 'moutlets.mbranchfk', '=', 'mbranches.id')
+            ->join('mregions', 'mbranches.mregionfk', '=', 'mregions.id')
+            ->select('mcams.*', 'moutlets.*', 'mbranches.branchname', 'mregions.regionname')
+            ->where('mcams.camip', 'like', "%" . $mcamid . "%")->first();
+
+        return view('user.offline.create', compact('cam', 'mscore'));
+
+    }
+
+    public function getItemAspek($maspekid = 0)
+    {
+        $itemData['data'] = Mscorecard::orderBy('scorecarname', 'DESC')
+            ->select('mscorecards.*')
+            ->where('id', $maspekid)
+            ->get();
+
+        return response()->json($itemData);
     }
 
 }

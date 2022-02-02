@@ -17,7 +17,7 @@
                 </ul>
             </div>
             @endif
-            <div class="card card-light">
+            <div class="card card-outline card-primary">
                 <div class="card-header">
                     <h3 class="card-title">{{__('Add User Data')}}</h3>
                 </div>
@@ -63,6 +63,17 @@
                                     <option value="">{{__('--Status--')}}</option>
                                     <option value="1">{{__('Aktif')}}</option>
                                     <option value="2">{{__('Non Aktif')}}</option>
+                                    <option value="3">{{__('Locked')}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputKodeRegion" class="col-sm-3 col-form-label">{{__('User Role')}}</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="level">
+                                    <option value="">{{__('--Status--')}}</option>
+                                    <option value="1">{{__('Admin')}}</option>
+                                    <option value="2">{{__('Auditor')}}</option>
                                 </select>
                             </div>
                         </div>
@@ -70,7 +81,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">{{__('Save User')}}</button>
+                        <button type="submit" class="btn btn-primary">{{__('Register')}}</button>
                     </div>
                 </form>
             </div>
@@ -78,4 +89,5 @@
         </div>
     </div>
 </div>
+@include('sweetalert::alert')
 @endsection

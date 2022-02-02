@@ -14,8 +14,17 @@ class CreateTauditsTable extends Migration
     public function up()
     {
         Schema::create('taudits', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->foreignId('muserfk');
+            $table->foreignId('moutletfk');
+            $table->foreignId('mscorecardfk');
+            $table->timestamp('audittime');
+            $table->integer('auditscore');
+            $table->string('yudisium');
             $table->timestamps();
+
+            $table->foreign('muserfk')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('mscorecardfk')->references('id')->on('mscorecards')->onDelete('cascade');
         });
     }
 

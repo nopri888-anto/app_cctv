@@ -1,7 +1,7 @@
 @extends('layout.admin_layout')
 
 @section('content')
-<div class="card">
+<div class="card card-outline card-primary">
     <div class="card-header">
         @if(Session::has('success'))
         <div class="alert alert-default-success alert-dismissible fade show" role="alert">

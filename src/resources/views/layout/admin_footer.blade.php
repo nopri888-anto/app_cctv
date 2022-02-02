@@ -45,26 +45,11 @@
 <script src="{{asset('vendor')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{asset('vendor')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true
-            , "lengthChange": false
-            , "autoWidth": false
-            , "buttons": [""]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true
-            , "lengthChange": false
-            , "searching": false
-            , "ordering": true
-            , "info": true
-            , "autoWidth": false
-            , "responsive": true
-        , });
-    });
+<script src="{{asset('vendor')}}/plugins/chart.js/Chart.min.js"></script>
 
-</script>
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+
 
 </body>
 </html>

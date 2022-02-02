@@ -21,6 +21,12 @@ class Moutlet extends Model
         //return $this->belongsTo('App\Models\Category','mcategories_id');
     }
 
+    public function mcams()
+    {
+        return $this->hasMany(Mcam::class);
+
+    }
+
     public function getDataBranch()
     {
         return DB::table('moutlets')

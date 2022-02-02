@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Mscorecard extends Model
 {
@@ -12,12 +11,8 @@ class Mscorecard extends Model
 
     protected $table = "mscorecards";
 
-
-    public function getDataAspek()
+    public function mscorecardaspect()
     {
-        return DB::table('mscorecards')
-            ->join('maspeks', 'mscorecards.maspectfk', '=', 'maspeks.id')
-            ->select('mscorecards.*', 'maspeks.aspectname')
-            ->get();
+        return $this->hasMany(MscorecardAspect::class);
     }
 }

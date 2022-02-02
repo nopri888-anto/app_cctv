@@ -20,7 +20,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{route('monitoring.live')}}" class="nav-link">
+                    <a href="{{route('user.live')}}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Live Streaming</p>
                     </a>
@@ -76,6 +76,17 @@
                     Report
                 </p>
             </a>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="{{route('logout')}}" class="nav-link" onclick="
+            event.preventDefault();
+            document.getElementById('formLogout').submit();">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                    Logout
+                </p>
+            </a>
+            <form action="{{ route('logout')}}" method="post" id="formLogout">@csrf</form>
         </li>
     </ul>
 </nav>

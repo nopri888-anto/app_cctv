@@ -14,14 +14,12 @@ class CreateMoutletsTable extends Migration
     public function up()
     {
         Schema::create('moutlets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('mbranchfk')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->bigIncrements('id');
+            $table->bigInteger('mbranchfk')->unsigned();
             $table->string('outlatename', 70);
             $table->string('updated', 10);
             $table->timestamps();
-            $table->foreign('mbranchfk')->references('id')->on('mbranches');
+            $table->foreign('mbranchfk')->references('id')->on('mbranches')->onDelete('cascade');
         });
     }
 

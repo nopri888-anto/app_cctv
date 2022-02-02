@@ -68,8 +68,8 @@ class MregionController extends Controller
         $insertdata = $mregion->save();
 
         if ($insertdata) {
-            Session::flash('success', 'Regional has been created!');
-            return redirect()->route('admin.regional');
+            //Session::flash('success', 'Regional has been created!');
+            return redirect()->route('admin.regional')->with('success', 'Regional has been created!');
         } else {
             Session::flash('errors', ['' => 'Regional Failed to created!']);
             return redirect()->route('admin.regional.create');

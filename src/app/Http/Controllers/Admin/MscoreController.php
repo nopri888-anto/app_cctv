@@ -74,8 +74,8 @@ class MscoreController extends Controller
         $insertdata = $mscore->save();
 
         if ($insertdata) {
-            Session::flash('success', 'Score has been created!');
-            return redirect()->route('admin.bobot');
+            //Session::flash('success', 'Score has been created!');
+            return redirect()->route('admin.bobot')->with('success', 'Bobot has been created!');;
         } else {
             Session::flash('errors', ['' => 'Score Failed to created!']);
             return redirect()->route('admin.bobot.create');

@@ -12,9 +12,9 @@ class Mcam extends Model
 
     protected $table = "mcams";
 
-    public function cam()
+    public function outlet()
     {
-        return $this->belongsTo(Moutlet::class);
+        return $this->belongsTo(Moutlet::class, 'outlatename');
     }
 
     public function getDataOutlet()
@@ -34,5 +34,4 @@ class Mcam extends Model
             ->select('mcams.*', 'moutlets.*', 'mbranches.*', 'mregions.*')
             ->get();
     }
-
 }

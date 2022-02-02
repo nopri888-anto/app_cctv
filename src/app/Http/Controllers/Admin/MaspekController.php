@@ -66,8 +66,8 @@ class MaspekController extends Controller
         $insertdata = $maspek->save();
 
         if ($maspek) {
-            Session::flash('success', 'Aspek has been created!');
-            return redirect()->route('admin.aspek');
+            // Session::flash('success', 'Aspek has been created!');
+            return redirect()->route('admin.aspek')->with('success', 'Aspek has been created!');
         } else {
             Session::flash('errors', ['' => 'Aspek Failed to created!']);
             return redirect()->route('admin.aspek.create');
@@ -116,6 +116,7 @@ class MaspekController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Maspek::whereId($id)->delete();
+        return back()->with('success', 'Scorecard has been deleted!');
     }
 }

@@ -7,7 +7,7 @@
         <div class="col-md-4 col-sm-4 col-lg-4">
             <div class="card text-center">
                 <div class="card-header">
-                    <img src="vendor/LTE/dist/img/logo2.png" class="img-index" alt="">
+                    <img src="{{asset('vendor')}}/LTE/dist/img/logo2.png" class="img-index" alt="">
                 </div>
 
                 <div class="card-body">

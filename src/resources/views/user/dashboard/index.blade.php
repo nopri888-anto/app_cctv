@@ -1,4 +1,4 @@
-@extends('layout.user_layout')
+@extends('layout.admin_layout')
 
 @section('content')
 <div class="card">
@@ -68,7 +68,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                       
+
                         <tr>
                             <td>1</td>
                             <td>Jakarta</td>
@@ -79,5 +79,5 @@
         </div>
     </div>
 </div>
-    <!-- /.card-body -->
+<!-- /.card-body -->
 @endsection

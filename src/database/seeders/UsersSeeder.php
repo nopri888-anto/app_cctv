@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Hash;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -20,23 +19,24 @@ class UsersSeeder extends Seeder
             'userid' => 'isAdmin',
             'username' => 'Administrator',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
+            'password' => bcrypt('admin12345'),
             'status' => '1',
             'updateby' => 'admin',
             'created_at' => \Carbon\Carbon::now('Asia/Jakarta'),
             'email_verified_at' => \Carbon\Carbon::now('Asia/Jakarta'),
+            'level' => '1',
         ]);
 
         \App\Models\User::insert([
-            'userid' => 'isUser',
-            'username' => 'user',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('user123'),
+            'userid' => 'isAuditor',
+            'username' => 'Auditor 1',
+            'email' => 'auditor@gmail.com',
+            'password' => bcrypt('user12345'),
             'status' => '1',
             'updateby' => 'admin',
             'created_at' => \Carbon\Carbon::now('Asia/Jakarta'),
             'email_verified_at' => \Carbon\Carbon::now('Asia/Jakarta'),
+            'level' => '2',
         ]);
-
     }
 }

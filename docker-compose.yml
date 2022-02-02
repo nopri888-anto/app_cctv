@@ -3,8 +3,7 @@ version: '3'
 networks:
   laravel:
 
-
-    #NGINX Service
+    null #NGINX Service
 services:
   site:
     build:
@@ -12,7 +11,7 @@ services:
       dockerfile: nginx.dockerfile
     container_name: nginx_app_cctv
     ports:
-      -  8080:80
+      - 8080:80
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
@@ -22,22 +21,22 @@ services:
       - mailhog
     networks:
       - laravel
-      
+
   postgres:
     image: postgres:9.6
     container_name: postgres_app_cctv
-    restart : unless-stopped
+    restart: unless-stopped
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-    tty : true
+    tty: true
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=webdbcctv
     ports:
-     - "5435:5432"
+      - "5435:5432"
     networks:
-     - laravel
+      - laravel
 
   php:
     build:
@@ -69,7 +68,7 @@ services:
     depends_on:
       - php
     user: laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: [ 'composer', '--ignore-platform-reqs' ]
     networks:
       - laravel
 
@@ -79,7 +78,7 @@ services:
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html
-    entrypoint: ['npm']
+    entrypoint: [ 'npm' ]
     networks:
       - laravel
 
@@ -94,7 +93,7 @@ services:
       - postgres
     working_dir: /var/www/html
     user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
+    entrypoint: [ 'php', '/var/www/html/artisan' ]
     networks:
       - laravel
 
@@ -106,5 +105,3 @@ services:
       - 8027:8025
     networks:
       - laravel
-
-     

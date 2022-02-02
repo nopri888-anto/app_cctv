@@ -17,6 +17,33 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function __login(Request $request)
+    {
+        request()->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->level == '1') {
+                return redirect()->intended('admin');
+            } else if ($user->level == '2') {
+                return redirect()->intended('user');
+            }
+            return redirect('/');
+        }
+        return redirect('login')->withSuccess('Please check youre username and password!');
+    }
+
+    public function __logout(Request $request)
+    {
+        $request->session()->flush();
+        Auth::logout();
+        return redirect('login');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -6,7 +6,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
         <img src="{{asset('vendor')}}/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">BNI</span>
+        <span class="brand-text font-weight-light">AUDITOR</span>
     </a>
 
     <!-- Sidebar -->
@@ -17,7 +17,7 @@
                 <img src="{{asset('vendor')}}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ Auth::user()->username }}</a>
             </div>
         </div>
 

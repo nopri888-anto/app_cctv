@@ -70,8 +70,8 @@ class MoutletController extends Controller
         $insertdata = $moutlet->save();
 
         if ($insertdata) {
-            Session::flash('success', 'Branch has been created!');
-            return redirect()->route('admin.outlet');
+            // Session::flash('success', 'Branch has been created!');
+            return redirect()->route('admin.outlet')->with('success', 'Outlate has been created!');
         } else {
             Session::flash('errors', ['' => 'Branch Failed to created!']);
             return redirect()->route('admin.branch.outlet');

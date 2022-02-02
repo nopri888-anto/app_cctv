@@ -14,7 +14,7 @@ class CreateMaspeksTable extends Migration
     public function up()
     {
         Schema::create('maspeks', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('aspectname', 30)->default();
             $table->string('updateby', 15)->default();
             $table->timestamps();

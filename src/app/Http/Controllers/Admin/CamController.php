@@ -88,8 +88,8 @@ class CamController extends Controller
         $insertdata = $mcams->save();
 
         if ($insertdata) {
-            Session::flash('success', 'Cam has been created!');
-            return redirect()->route('admin.cam');
+            //Session::flash('success', 'Cam has been created!');
+            return redirect()->route('admin.cam')->with('success', 'Cam has been created!');
         } else {
             Session::flash('errors', ['' => 'Camera Failed to created!']);
             return redirect()->route('admin.cam.create');
